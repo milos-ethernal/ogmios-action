@@ -3,7 +3,5 @@ import { downloadRelease, unpackRelease, moveToRunnerBin } from './functions/ogm
 
 dotenv.config();
 await downloadRelease();
-const exeFolderPath = await unpackRelease();
+await unpackRelease();
 await moveToRunnerBin();
-//await appendToGitHubPath(exeFolderPath);
-//await moveToRunnerBinTest();

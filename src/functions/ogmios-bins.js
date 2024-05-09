@@ -1,10 +1,9 @@
-import { readdirSync, statSync, rmdirSync, mkdirSync, writeFileSync } from 'fs';
+import { readdirSync, statSync, mkdirSync, writeFileSync } from 'fs';
 import { URL } from 'url';
 import * as path from 'path';
 import { exec as execCallback } from 'child_process';
 import { promisify } from 'util';
 import { rimraf } from 'rimraf';
-import * as core from '@actions/core';
 
 const exec = promisify(execCallback);
 
@@ -52,7 +51,6 @@ export const unpackRelease = async () => {
         if (['linux'].includes(process.platform)) {
             await exec(`unzip "${filePath}" -d "${dir}"`);
 
-            // Assuming the tar archive contains a single top-level directory
             const files = readdirSync(dir);
             const extractedDirs = files.filter(file => statSync(path.join(dir, file)).isDirectory());
 
@@ -71,8 +69,6 @@ export const unpackRelease = async () => {
         console.error(`Error occurred while unpacking: ${error}`);
         throw error;
     }
-
-    return path.resolve(dir);
 };
 
 export const moveToRunnerBin = async () => {
@@ -81,37 +77,9 @@ export const moveToRunnerBin = async () => {
     try {
         await exec(`sudo mv ./bins/ogmios ${path}`);
         await exec(`chmod +x "${path}/ogmios"`);
+        rimraf.sync("./bins");
     }
     catch (error) {
-        console.error('Error occurred:', error);
-        throw error;
-    }
-}
-
-export const appendToGitHubPath = async (directory) => {
-    console.log(`Appending ${directory} to GITHUB_PATH`);
-    const path = process.env['GITHUB_WORKSPACE'];
-    console.log(`GITHUB_WORKSPACE: ${path}`);
-    try {
-        core.addPath(`${path}/**`);
-    }
-    catch (error) {
-        console.error('Error occurred:', error);
-        throw error;
-    }
-};
-
-export const moveToRunnerBinTest = async () => {
-    const runnerBinDir = process.env['RUNNER_TEMP'] || './runner-bin'; // Use a temporary directory if available, otherwise use a custom directory
-    console.log(`Runner bin directory: ${runnerBinDir}`);
-    try {
-        mkdirSync(runnerBinDir, { recursive: true });
-        await exec(`mv ./bins/ogmios ${runnerBinDir}`);
-        console.log('ogmios binary moved successfully to runner bin directory.');
-        // Optionally, add runnerBinDir to PATH
-        process.env['PATH'] = `${runnerBinDir}:${process.env['PATH']}`;
-        console.log(`Updated PATH: ${process.env['PATH']}`);
-    } catch (error) {
         console.error('Error occurred:', error);
         throw error;
     }
