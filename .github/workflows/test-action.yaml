@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+      - dev
 
 jobs:
   test:
@@ -17,8 +18,8 @@ jobs:
       with:
         go-version: '1.20'
     
-    # - name: Install ogmios
-    #   uses: milos-ethernal/ogmios-action@1fbc782e9aa3ab35c688d0cba578459a06468229
+    - name: Install ogmios
+      uses: milos-ethernal/ogmios-action@ef3ffc67221634f1585a2afd1b9407fdce6c0f0e
 
-    # - name: Test
-    #   run: ogmios --version
+    - name: Test
+      run: ogmios --version
