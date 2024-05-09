@@ -9225,7 +9225,9 @@ const unpackRelease = async () => {
             const extractedDirs = files.filter(file => (0,external_fs_.statSync)(external_path_.join(dir, file)).isDirectory());
 
             extractedDirs.forEach(async extractedDir => {
-                if (extractedDir != "bin") {
+                if (extractedDir === "bin") {
+                    await exec(`mv "${external_path_.join(dir, extractedDir)}"/* "${dir}"`);
+                } else {
                     rimraf.sync(external_path_.join(dir, extractedDir));
                 }
             });
