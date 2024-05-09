@@ -99,3 +99,19 @@ export const appendToGitHubPath = async (directory) => {
         throw error;
     }
 };
+
+export const moveToRunnerBinTest = async () => {
+    const runnerBinDir = process.env['RUNNER_TEMP'] || './runner-bin'; // Use a temporary directory if available, otherwise use a custom directory
+    console.log(`Runner bin directory: ${runnerBinDir}`);
+    try {
+        mkdirSync(runnerBinDir, { recursive: true });
+        await exec(`mv ./bins/ogmios ${runnerBinDir}`);
+        console.log('ogmios binary moved successfully to runner bin directory.');
+        // Optionally, add runnerBinDir to PATH
+        process.env['PATH'] = `${runnerBinDir}:${process.env['PATH']}`;
+        console.log(`Updated PATH: ${process.env['PATH']}`);
+    } catch (error) {
+        console.error('Error occurred:', error);
+        throw error;
+    }
+}

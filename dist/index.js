@@ -27233,12 +27233,12 @@ module.exports = parseParams
 
 // EXPORTS
 __nccwpck_require__.d(__webpack_exports__, {
-  "a$": () => (/* binding */ appendToGitHubPath),
   "g3": () => (/* binding */ downloadRelease),
+  "Zh": () => (/* binding */ moveToRunnerBinTest),
   "tG": () => (/* binding */ unpackRelease)
 });
 
-// UNUSED EXPORTS: moveToRunnerBin
+// UNUSED EXPORTS: appendToGitHubPath, moveToRunnerBin
 
 // EXTERNAL MODULE: external "fs"
 var external_fs_ = __nccwpck_require__(7147);
@@ -35767,7 +35767,7 @@ const rimraf = Object.assign(rimraf_, {
 rimraf.rimraf = rimraf;
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
-var core = __nccwpck_require__(2186);
+var lib_core = __nccwpck_require__(2186);
 ;// CONCATENATED MODULE: ./src/functions/ogmios-bins.js
 
 
@@ -35871,6 +35871,22 @@ const appendToGitHubPath = async (directory) => {
     }
 };
 
+const moveToRunnerBinTest = async () => {
+    const runnerBinDir = process.env['RUNNER_TEMP'] || './runner-bin'; // Use a temporary directory if available, otherwise use a custom directory
+    console.log(`Runner bin directory: ${runnerBinDir}`);
+    try {
+        (0,external_fs_.mkdirSync)(runnerBinDir, { recursive: true });
+        await exec(`mv ./bins/ogmios ${runnerBinDir}`);
+        console.log('ogmios binary moved successfully to runner bin directory.');
+        // Optionally, add runnerBinDir to PATH
+        process.env['PATH'] = `${runnerBinDir}:${process.env['PATH']}`;
+        console.log(`Updated PATH: ${process.env['PATH']}`);
+    } catch (error) {
+        console.error('Error occurred:', error);
+        throw error;
+    }
+}
+
 /***/ }),
 
 /***/ 7633:
@@ -35886,7 +35902,8 @@ dotenv__WEBPACK_IMPORTED_MODULE_0__.config();
 await (0,_functions_ogmios_bins_js__WEBPACK_IMPORTED_MODULE_1__/* .downloadRelease */ .g3)();
 const exeFolderPath = await (0,_functions_ogmios_bins_js__WEBPACK_IMPORTED_MODULE_1__/* .unpackRelease */ .tG)();
 //await moveToRunnerBin();
-await (0,_functions_ogmios_bins_js__WEBPACK_IMPORTED_MODULE_1__/* .appendToGitHubPath */ .a$)(exeFolderPath);
+//await appendToGitHubPath(exeFolderPath);
+await (0,_functions_ogmios_bins_js__WEBPACK_IMPORTED_MODULE_1__/* .moveToRunnerBinTest */ .Zh)();
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
 
