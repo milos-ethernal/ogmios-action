@@ -1,0 +1,8 @@
+name: 'Add ogmios'
+description: 'Add ogmios to your workflow'
+branding:
+    icon: "bell"
+    color: "green"
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
