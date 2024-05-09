@@ -4,5 +4,5 @@ import { downloadRelease, unpackRelease, moveToRunnerBin } from './functions/ogm
 dotenv.config();
 await downloadRelease();
 await unpackRelease();
-//await moveToRunnerBin();
+await moveToRunnerBin();
 //await appendToGitHubPath(fullPath);
