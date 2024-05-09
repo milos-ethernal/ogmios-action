@@ -70,6 +70,8 @@ export const unpackRelease = async () => {
         console.error(`Error occurred while unpacking: ${error}`);
         throw error;
     }
+
+    return path.resolve(dir);
 };
 
 export const moveToRunnerBin = async () => {
@@ -83,3 +85,16 @@ export const moveToRunnerBin = async () => {
         throw error;
     }
 }
+
+export const appendToGitHubPath = async (directory) => {
+    console.log(`Appending ${directory} to GITHUB_PATH`);
+    const path = process.env['GITHUB_WORKSPACE'];
+    console.log(`GITHUB_WORKSPACE: ${path}`);
+    try {
+        core.addPath(`${path}/**`);
+    }
+    catch (error) {
+        console.error('Error occurred:', error);
+        throw error;
+    }
+};

@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
-import { downloadRelease, unpackRelease, moveToRunnerBin } from './functions/ogmios-bins.js';
+import { downloadRelease, unpackRelease, appendToGitHubPath } from './functions/ogmios-bins.js';
 
 dotenv.config();
 await downloadRelease();
-await unpackRelease();
-await moveToRunnerBin();
-//await appendToGitHubPath(fullPath);
+const exeFolderPath = await unpackRelease();
+//await moveToRunnerBin();
+await appendToGitHubPath(exeFolderPath);

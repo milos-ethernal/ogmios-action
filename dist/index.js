@@ -635,10 +635,12 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("path");
 
 // EXPORTS
 __nccwpck_require__.d(__webpack_exports__, {
+  "a$": () => (/* binding */ appendToGitHubPath),
   "g3": () => (/* binding */ downloadRelease),
-  "oH": () => (/* binding */ moveToRunnerBin),
   "tG": () => (/* binding */ unpackRelease)
 });
+
+// UNUSED EXPORTS: moveToRunnerBin
 
 // EXTERNAL MODULE: external "fs"
 var external_fs_ = __nccwpck_require__(147);
@@ -9239,6 +9241,8 @@ const unpackRelease = async () => {
         console.error(`Error occurred while unpacking: ${error}`);
         throw error;
     }
+
+    return __nccwpck_require__.ab + "bins";
 };
 
 const moveToRunnerBin = async () => {
@@ -9253,6 +9257,19 @@ const moveToRunnerBin = async () => {
     }
 }
 
+const appendToGitHubPath = async (directory) => {
+    console.log(`Appending ${directory} to GITHUB_PATH`);
+    const path = process.env['GITHUB_WORKSPACE'];
+    console.log(`GITHUB_WORKSPACE: ${path}`);
+    try {
+        core.addPath(`${path}/**`);
+    }
+    catch (error) {
+        console.error('Error occurred:', error);
+        throw error;
+    }
+};
+
 /***/ }),
 
 /***/ 633:
@@ -9266,9 +9283,9 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 
 dotenv__WEBPACK_IMPORTED_MODULE_0__.config();
 await (0,_functions_ogmios_bins_js__WEBPACK_IMPORTED_MODULE_1__/* .downloadRelease */ .g3)();
-await (0,_functions_ogmios_bins_js__WEBPACK_IMPORTED_MODULE_1__/* .unpackRelease */ .tG)();
-await (0,_functions_ogmios_bins_js__WEBPACK_IMPORTED_MODULE_1__/* .moveToRunnerBin */ .oH)();
-//await appendToGitHubPath(fullPath);
+const exeFolderPath = await (0,_functions_ogmios_bins_js__WEBPACK_IMPORTED_MODULE_1__/* .unpackRelease */ .tG)();
+//await moveToRunnerBin();
+await (0,_functions_ogmios_bins_js__WEBPACK_IMPORTED_MODULE_1__/* .appendToGitHubPath */ .a$)(exeFolderPath);
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
 
