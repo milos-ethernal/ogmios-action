@@ -58,8 +58,9 @@ export const unpackRelease = async () => {
             extractedDirs.forEach(async extractedDir => {
                 if (extractedDir === "bin") {
                     await exec(`mv "${path.join(dir, extractedDir)}"/* "${dir}"`);
+                } else {
+                    rimraf.sync(path.join(dir, extractedDir));
                 }
-                rimraf.sync(path.join(dir, extractedDir));
             });
             rimraf.sync(filePath);
         } else {
