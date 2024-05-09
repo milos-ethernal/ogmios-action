@@ -17,8 +17,8 @@ jobs:
       with:
         go-version: '1.20'
     
-    # - name: Install ogmios
-    #   uses: milos-ethernal/ogmios-action@c19d5ec711f2f5c6e7712dfce00e3f065609e212
+    - name: Install ogmios
+      uses: milos-ethernal/ogmios-action@bc1177d505ee4c2d3d0031f4831c6ad355f97f87
 
-    # - name: Test
-    #   run: ogmios --version
+    - name: Test
+      run: ogmios --version
