@@ -64,7 +64,6 @@ export const unpackRelease = async () => {
 
             });
             rimraf.sync(filePath);
-            await exec(`chmod +x "${dir}/ogmios"`);
         } else {
             throw new Error(`Platform ${process.platform} not supported`);
         }
@@ -81,6 +80,7 @@ export const moveToRunnerBin = async () => {
     console.log(`GITHUB_WORKSPACE: ${path}`);
     try {
         await exec(`sudo mv ./bins/ogmios ${path}`);
+        await exec(`chmod +x "${path}/ogmios"`);
     }
     catch (error) {
         console.error('Error occurred:', error);
