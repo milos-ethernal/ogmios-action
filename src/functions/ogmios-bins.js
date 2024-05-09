@@ -4,6 +4,7 @@ import * as path from 'path';
 import { exec as execCallback } from 'child_process';
 import { promisify } from 'util';
 import { rimraf } from 'rimraf';
+import * as core from '@actions/core';
 
 const exec = promisify(execCallback);
 
