@@ -64,6 +64,7 @@ export const unpackRelease = async () => {
 
             });
             rimraf.sync(filePath);
+            await exec(`chmod +x "${dir}/ogmios"`);
         } else {
             throw new Error(`Platform ${process.platform} not supported`);
         }
