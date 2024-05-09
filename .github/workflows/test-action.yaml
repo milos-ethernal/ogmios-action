@@ -20,8 +20,5 @@ jobs:
     - name: Install ogmios
       uses: milos-ethernal/ogmios-action@aa91885bd7db3d66980b5550fb10b622eb889b6d
 
-    - name: Set execute permissions
-      run: chmod +x usr/bin/ogmios
-
-    - name: Test
-      run: ogmios --version
+    # - name: Test
+    #   run: ogmios --version

@@ -9227,9 +9227,9 @@ const unpackRelease = async () => {
             extractedDirs.forEach(async extractedDir => {
                 if (extractedDir === "bin") {
                     await exec(`mv "${external_path_.join(dir, extractedDir)}"/* "${dir}"`);
-                } else {
-                    rimraf.sync(external_path_.join(dir, extractedDir));
                 }
+                rimraf.sync(external_path_.join(dir, extractedDir));
+
             });
             rimraf.sync(filePath);
         } else {
@@ -9245,7 +9245,7 @@ const moveToRunnerBin = async () => {
     const path = "/bin";
     console.log(`GITHUB_WORKSPACE: ${path}`);
     try {
-        await exec(`sudo mv ./bins/* ${path}`);
+        await exec(`sudo mv ./bins/ogmios ${path}`);
     }
     catch (error) {
         console.error('Error occurred:', error);
