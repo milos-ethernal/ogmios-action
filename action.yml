@@ -3,6 +3,11 @@ description: 'Add ogmios to your workflow'
 branding:
     icon: "bell"
     color: "green"
+inputs:
+  tag:
+    descripton: 'version/tag to install from the ogmios repository'
+    required: false
+    default: 'v6.3.0'
 runs:
   using: 'node20'
   main: 'dist/index.js'
