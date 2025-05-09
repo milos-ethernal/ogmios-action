@@ -4,15 +4,15 @@ import * as path from 'path';
 import { exec as execCallback } from 'child_process';
 import { promisify } from 'util';
 import { rimraf } from 'rimraf';
+import * as core from '@actions/core';
 
 const exec = promisify(execCallback);
 
-const OGMIOS_VERSION = "v6.3.0"
 const BINS_BASE_URL = 'https://github.com/CardanoSolutions/ogmios';
 
 const getPlatformReleaseUrl = async () => {
     const platform = process.platform;
-    const tag = OGMIOS_VERSION;
+    const tag = core.getInput('tag');
     let file_name = '';
     if (platform === 'linux') {
         file_name = `ogmios-${tag}-x86_64-linux.zip`;

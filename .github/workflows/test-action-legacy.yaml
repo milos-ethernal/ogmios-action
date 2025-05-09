@@ -1,4 +1,4 @@
-name: Test
+name: Legacy test
 
 on: 
   workflow_dispatch:
@@ -17,8 +17,6 @@ jobs:
     
     - name: Install ogmios
       uses: milos-ethernal/ogmios-action@a77426bc6547b84421f2dee20beaed35a404c69b
-      with:
-        tag: 'v6.11.2'
 
     - name: Test
       run: ogmios --version
