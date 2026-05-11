@@ -15,8 +15,10 @@ To use this action in your workflow just add the following lines to your workflo
   uses: milos-ethernal/ogmios-action@{sha}
   with:
     tag: 'v6.11.2'
+    sufix: '11'
 ```
 Tag is optional parameter, if not defined action will use ogmios release version v6.3.0.
+Sufix is optional parameter, if defined action will install ogmios as `ogmios-{sufix}`.
 
 After this step ogmios will be available in your workflow.
 You can use them in your scripts or directly execute them in your workflow steps.

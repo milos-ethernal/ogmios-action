@@ -9,6 +9,18 @@ import * as core from '@actions/core';
 const exec = promisify(execCallback);
 
 const BINS_BASE_URL = 'https://github.com/CardanoSolutions/ogmios';
+const BINARY_NAME = 'ogmios';
+
+const getBinaryName = () => {
+    const sufix = core.getInput('sufix');
+    if (!sufix) {
+        return BINARY_NAME;
+    }
+    if (!/^[A-Za-z0-9._-]+$/.test(sufix)) {
+        throw new Error('Input "sufix" can only contain letters, numbers, dots, underscores, and dashes');
+    }
+    return `${BINARY_NAME}-${sufix}`;
+};
 
 const getPlatformReleaseUrl = async () => {
     const platform = process.platform;
@@ -72,11 +84,13 @@ export const unpackRelease = async () => {
 };
 
 export const moveToRunnerBin = async () => {
-    const path = "/bin";
-    console.log(`GITHUB_WORKSPACE: ${path}`);
+    const installDir = "/bin";
+    const binaryName = getBinaryName();
+    const destination = path.join(installDir, binaryName);
+    console.log(`Installing ${binaryName} to ${installDir}`);
     try {
-        await exec(`sudo mv ./bins/ogmios ${path}`);
-        await exec(`chmod +x "${path}/ogmios"`);
+        await exec(`sudo mv ./bins/ogmios "${destination}"`);
+        await exec(`chmod +x "${destination}"`);
         rimraf.sync("./bins");
     }
     catch (error) {

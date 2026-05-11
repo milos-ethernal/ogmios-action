@@ -16,9 +16,13 @@ jobs:
         go-version: '1.20'
     
     - name: Install ogmios
-      uses: milos-ethernal/ogmios-action@a77426bc6547b84421f2dee20beaed35a404c69b
+      uses: ./
       with:
-        tag: 'v6.11.2'
+        tag: 'v6.14.0'
+        sufix: '11'
 
     - name: Test
-      run: ogmios --version
+      run: |
+        test -x "$(command -v ogmios-11)"
+        ! command -v ogmios
+        ogmios-11 --version
